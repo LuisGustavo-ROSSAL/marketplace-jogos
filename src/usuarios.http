@@ -1,0 +1,30 @@
+### Requisições para Usuario
+@baseUrl = http://localhost:3000
+
+### Criar usuário
+# passwordHash não deve ser enviado pelo cliente em produção; o backend deve gerar o hash a partir da senha.
+POST {{baseUrl}}/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Ana Silva",
+  "email": "ana@example.com"
+}
+
+### Listar usuários
+GET {{baseUrl}}/usuarios
+
+### Buscar usuário por ID
+GET {{baseUrl}}/usuarios/1
+
+### Atualizar usuário
+PUT {{baseUrl}}/usuarios/1
+Content-Type: application/json
+
+{
+  "nome": "Ana Silva Atualizada",
+  "email": "ana.atualizada@example.com"
+}
+
+### Excluir usuário
+DELETE {{baseUrl}}/usuarios/1

@@ -1,0 +1,46 @@
+### Requisições para Venda
+@baseUrl = http://localhost:3000
+
+### Criar venda sem comprador (ainda não vendida)
+POST {{baseUrl}}/vendas
+Content-Type: application/json
+
+{
+  "idColecao": 1,
+  "idVendedor": 1
+}
+
+### Criar venda já vinculada a comprador
+POST {{baseUrl}}/vendas
+Content-Type: application/json
+
+{
+  "idColecao": 1,
+  "idVendedor": 1,
+  "idComprador": 2
+}
+
+### Listar vendas
+GET {{baseUrl}}/vendas
+
+### Buscar venda por ID
+GET {{baseUrl}}/vendas/1
+
+### Atualizar comprador de uma venda
+PUT {{baseUrl}}/vendas/1
+Content-Type: application/json
+
+{
+  "idComprador": 2
+}
+
+### Remover comprador (deixar venda sem comprador)
+PUT {{baseUrl}}/vendas/1
+Content-Type: application/json
+
+{
+  "idComprador": null
+}
+
+### Excluir venda
+DELETE {{baseUrl}}/vendas/1
