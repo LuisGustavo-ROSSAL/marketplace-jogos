@@ -1,0 +1,23 @@
+### Requisições para AvaliacaoComprador
+@baseUrl = http://localhost:3000
+
+### Criar avaliação
+# idUsuario = comprador que fez a avaliação
+# idVendor = vendedor que está sendo avaliado
+POST {{baseUrl}}/avaliacoes
+Content-Type: application/json
+
+{
+  "idVenda": 1,
+  "idUsuario": 2,
+  "idVendor": 1
+}
+
+### Listar avaliações
+GET {{baseUrl}}/avaliacoes
+
+### Buscar avaliação por ID
+GET {{baseUrl}}/avaliacoes/1
+
+### Excluir avaliação
+DELETE {{baseUrl}}/avaliacoes/1

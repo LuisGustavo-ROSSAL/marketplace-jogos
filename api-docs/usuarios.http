@@ -1,0 +1,36 @@
+### Requisições para Usuario
+@baseUrl = http://localhost:3000/api
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXN1YXJpb0B1cGYuYnIiLCJuYW1lIjoidXN1YXJpbyIsImlhdCI6MTc5MjI4MDM3MiwiZXhwIjoxNzkyMzY2NzcyfQ.tr4Irx8veDMnDudfmhjViQe8DxxBj2nm0ifSPck8xEI
+
+### Criar usuário
+# As rotas de usuários exigem um token JWT; obtenha-o em auth.http e informe-o em @token.
+POST {{baseUrl}}/usuarios
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nome": "Ana Silva",
+  "email": "ana@example.com",
+  "senha": "senha123"
+}
+
+### Listar usuários
+GET {{baseUrl}}/usuarios
+Authorization: Bearer {{token}}
+
+### Buscar usuário por ID
+GET {{baseUrl}}/usuarios/1
+Authorization: Bearer {{token}}
+
+### Atualizar usuário
+PATCH {{baseUrl}}/usuarios/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nome": "Ana Silva Atualizada"
+}
+
+### Excluir usuário
+DELETE {{baseUrl}}/usuarios/1
+Authorization: Bearer {{token}}

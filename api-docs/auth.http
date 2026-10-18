@@ -1,0 +1,22 @@
+@baseUrl = http://localhost:3000/api
+
+### Entrar
+# Copie access_token da resposta para @token em usuarios.http para testar rotas protegidas.
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "usuario@upf.br",
+  "password": "abc123"
+}
+
+### Registrar usuário
+# O serviço recebe a senha neste campo e armazena somente o hash.
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "usuario",
+  "email": "usuario@upf.br",
+  "passwordHash": "abc123"
+}

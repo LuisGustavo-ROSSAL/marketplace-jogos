@@ -1,0 +1,27 @@
+### Requisições para Colecao
+@baseUrl = http://localhost:3000
+
+### Criar coleção
+POST {{baseUrl}}/colecoes
+Content-Type: application/json
+
+{
+  "nomeConsole": "PlayStation 5"
+}
+
+### Listar coleções
+GET {{baseUrl}}/colecoes
+
+### Buscar coleção por ID
+GET {{baseUrl}}/colecoes/1
+
+### Atualizar coleção
+PUT {{baseUrl}}/colecoes/1
+Content-Type: application/json
+
+{
+  "nomeConsole": "Nintendo Switch"
+}
+
+### Excluir coleção
+DELETE {{baseUrl}}/colecoes/1
