@@ -1,7 +1,9 @@
-import { ListingCard } from '../components/ListingCard'
-import { useMarketplace } from '../context/MarketplaceContext'
+'use client'
 
-export function CollectionPage() {
+import { ListingCard } from '../../components/ListingCard'
+import { useMarketplace } from '../../context/MarketplaceContext'
+
+export default function CollectionPage() {
   const { listings, searchQuery } = useMarketplace()
   const visibleListings = listings.filter((listing) => listing.name.toLowerCase().includes(searchQuery.toLowerCase()))
 

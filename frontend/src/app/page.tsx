@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom'
+'use client'
+
+import Link from 'next/link'
 import { EmptyState } from '../components/EmptyState'
 import { ListingCard } from '../components/ListingCard'
 import { useMarketplace } from '../context/MarketplaceContext'
 
-export function HomePage() {
+export default function HomePage() {
   const { listings, searchQuery } = useMarketplace()
   const filteredListings = listings.filter((listing) => listing.name.toLowerCase().includes(searchQuery.toLowerCase()))
 
@@ -27,9 +29,9 @@ export function HomePage() {
       <section className="catalog-section" id="catalogo">
         <div className="section-heading">
           <div><span className="eyebrow">SELEÇÃO DA COMUNIDADE</span><h2>Achados para sua coleção</h2></div>
-          <Link className="text-button" to="/colecao">Ver coleção completa <span>→</span></Link>
+          <Link className="text-button" href="/colecao">Ver coleção completa <span>→</span></Link>
         </div>
-        {filteredListings.length > 0
+        {filteredListings.length
           ? <div className="listing-grid">{filteredListings.map((listing) => <ListingCard key={listing.id} listing={listing} />)}</div>
           : <EmptyState title="Nada por aqui ainda" text="Tente buscar por outro console ou jogo." />}
       </section>

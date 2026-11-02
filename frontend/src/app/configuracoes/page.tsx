@@ -1,6 +1,8 @@
-import { useMarketplace } from '../context/MarketplaceContext'
+'use client'
 
-export function SettingsPage() {
+import { useMarketplace } from '../../context/MarketplaceContext'
+
+export default function SettingsPage() {
   const { notify } = useMarketplace()
 
   return (

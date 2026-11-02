@@ -1,5 +1,7 @@
+'use client'
+
 import type { FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 type AccountFormProps = {
   signingUp: boolean
@@ -19,7 +21,7 @@ export function AccountForm({ signingUp, onSubmit }: AccountFormProps) {
         <button className="button button--blue account-submit" type="submit">
           {signingUp ? 'Criar conta' : 'Entrar'} <span>→</span>
         </button>
-        <Link className="account-switch" to={signingUp ? '/entrar' : '/cadastro'}>
+        <Link className="account-switch" href={signingUp ? '/entrar' : '/cadastro'}>
           {signingUp ? 'Já tenho uma conta' : 'Ainda não tenho uma conta'}
         </Link>
       </form>

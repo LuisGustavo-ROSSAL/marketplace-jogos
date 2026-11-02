@@ -1,11 +1,14 @@
-import type { CSSProperties } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { EmptyState } from '../components/EmptyState'
-import { useMarketplace } from '../context/MarketplaceContext'
-import { money } from '../utils/format'
+'use client'
 
-export function ListingDetailsPage() {
-  const { id } = useParams()
+import type { CSSProperties } from 'react'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
+import { EmptyState } from '../../../components/EmptyState'
+import { useMarketplace } from '../../../context/MarketplaceContext'
+import { money } from '../../../utils/format'
+
+export default function ListingDetailsPage() {
+  const { id } = useParams<{ id: string }>()
   const { listings, notify } = useMarketplace()
   const listing = listings.find((item) => item.id === Number(id))
 
@@ -35,15 +38,13 @@ export function ListingDetailsPage() {
           <div><span>Condição</span><strong>{listing.condition}</strong></div>
         </div>
         <div className="detail-buy">
-          <button className="button button--lime" type="button" onClick={() => notify('A compra será conectada quando a API tiver checkout.')}>
-            {listing.status === 'Vendido' ? 'Ver similares' : 'Tenho interesse'} <span>→</span>
-          </button>
+          <button className="button button--lime" type="button" onClick={() => notify('A compra será conectada quando a API tiver checkout.')}>{listing.status === 'Vendido' ? 'Ver similares' : 'Tenho interesse'} <span>→</span></button>
           <strong>{money(listing.price)}</strong>
         </div>
         <div className="seller-block">
           <span className="avatar">C</span>
           <div><strong>Comunidade Jogada</strong><small>Vendedor · 4,9 <span>★</span> · 28 vendas</small></div>
-          <Link className="text-button" to="/perfil">Perfil →</Link>
+          <Link className="text-button" href="/perfil">Perfil →</Link>
         </div>
         <div className="seller-rating"><strong>Avaliações da comunidade</strong><span>★★★★★ <small>5.0 / 5.0</small></span></div>
       </article>

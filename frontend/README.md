@@ -1,38 +1,36 @@
 # Frontend
 
-Aplicação React, TypeScript e Vite para o marketplace de jogos. Cada tela fica em um arquivo próprio dentro de `src/pages/`; o `App.tsx` declara as rotas, e os componentes compartilhados ficam em `src/components/`.
+Aplicação React, TypeScript e Next.js usando o App Router. Cada tela corresponde a um `page.tsx` dentro de `src/app/`; o caminho da pasta define a URL. Os componentes compartilhados ficam em `src/components/`.
 
 ## Estrutura
 
 ```text
 src/
-	App.tsx                     Rotas da aplicação
-	components/                 Cabeçalho, menu, cartões e estados vazios
-	context/                    Estado compartilhado entre páginas
-	data/                       Dados de demonstração
-	pages/                      Uma página por arquivo
-	types/                      Tipos usados entre módulos
-	utils/                      Funções auxiliares
-	main.tsx                    Inicialização do React
-	styles.css                  Estilos globais e responsivos
+  app/                        Rotas e layout do Next.js
+  components/                 Cabeçalho, menu, cartões e estados vazios
+  context/                    Estado compartilhado entre páginas
+  data/                       Dados de demonstração
+  types/                      Tipos usados entre módulos
+  utils/                      Funções auxiliares
+  styles.css                  Estilos globais e responsivos
 ```
 
 ## Páginas
 
 | Arquivo | Rota | Tela |
 |---|---|---|
-| `HomePage.tsx` | `/` | Catálogo inicial |
-| `CollectionPage.tsx` | `/colecao` | Minha coleção |
-| `ListingDetailsPage.tsx` | `/anuncios/:id` | Detalhes do anúncio |
-| `CreateListingPage.tsx` | `/anuncios/novo` | Criar anúncio |
-| `MyListingsPage.tsx` | `/meus-anuncios` | Meus anúncios |
-| `FavoritesPage.tsx` | `/favoritos` | Favoritos |
-| `MessagesPage.tsx` | `/mensagens` | Mensagens |
-| `ProfilesPage.tsx` | `/perfis` | Perfis cadastrados |
-| `ProfilePage.tsx` | `/perfil` | Perfil do usuário |
-| `LoginPage.tsx` | `/entrar` | Entrar |
-| `SignupPage.tsx` | `/cadastro` | Criar conta |
-| `SettingsPage.tsx` | `/configuracoes` | Configurações |
+| `app/page.tsx` | `/` | Catálogo inicial |
+| `app/colecao/page.tsx` | `/colecao` | Minha coleção |
+| `app/anuncios/[id]/page.tsx` | `/anuncios/:id` | Detalhes do anúncio |
+| `app/anuncios/novo/page.tsx` | `/anuncios/novo` | Criar anúncio |
+| `app/meus-anuncios/page.tsx` | `/meus-anuncios` | Meus anúncios |
+| `app/favoritos/page.tsx` | `/favoritos` | Favoritos |
+| `app/mensagens/page.tsx` | `/mensagens` | Mensagens |
+| `app/perfis/page.tsx` | `/perfis` | Perfis cadastrados |
+| `app/perfil/page.tsx` | `/perfil` | Perfil do usuário |
+| `app/entrar/page.tsx` | `/entrar` | Entrar |
+| `app/cadastro/page.tsx` | `/cadastro` | Criar conta |
+| `app/configuracoes/page.tsx` | `/configuracoes` | Configurações |
 
 ## Executar localmente
 
@@ -44,7 +42,7 @@ npm.cmd install
 npm.cmd run dev
 ```
 
-O Vite informará o endereço local, normalmente `http://localhost:5173`.
+O Next.js informará o endereço local, normalmente `http://localhost:3000`.
 
 ## Dados e backend
 

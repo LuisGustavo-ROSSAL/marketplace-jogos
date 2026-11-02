@@ -1,4 +1,7 @@
-import { NavLink, Link } from 'react-router-dom'
+'use client'
+
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useMarketplace } from '../context/MarketplaceContext'
 
 type SideDrawerProps = {
@@ -18,6 +21,7 @@ const menuItems = [
 
 export function SideDrawer({ open, onClose }: SideDrawerProps) {
   const { userName, logout, notify } = useMarketplace()
+  const pathname = usePathname()
   if (!open) return null
 
   return (
@@ -28,23 +32,20 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
           <span>JOGADA<span className="brand__dot">.</span></span>
           <button className="icon-button" type="button" aria-label="Fechar menu" onClick={onClose}>×</button>
         </div>
-        <Link className="drawer__profile" to="/perfil" onClick={onClose}>
+        <Link className="drawer__profile" href="/perfil" onClick={onClose}>
           <span className="avatar">{userName.slice(0, 1).toUpperCase()}</span>
           <span><strong>Olá, {userName}</strong><small>Ver meu perfil</small></span>
           <span className="drawer__chevron">›</span>
         </Link>
         <nav className="drawer__nav">
-          {menuItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.to === '/'}
-              className={({ isActive }) => isActive ? 'drawer__link is-active' : 'drawer__link'}
-              onClick={onClose}
-            >
-              <span className="drawer__icon">{item.icon}</span>{item.label}<span className="drawer__arrow">›</span>
-            </NavLink>
-          ))}
+          {menuItems.map((item) => {
+            const isActive = item.to === '/' ? pathname === '/' : pathname === item.to || pathname.startsWith(`${item.to}/`)
+            return (
+              <Link key={item.to} href={item.to} className={isActive ? 'drawer__link is-active' : 'drawer__link'} onClick={onClose}>
+                <span className="drawer__icon">{item.icon}</span>{item.label}<span className="drawer__arrow">›</span>
+              </Link>
+            )
+          })}
         </nav>
         <button className="drawer__logout" type="button" onClick={() => { logout(); onClose(); notify('Sessão encerrada.') }}>
           ↪ <span>Sair</span>

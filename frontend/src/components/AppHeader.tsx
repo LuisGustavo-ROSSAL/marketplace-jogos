@@ -1,4 +1,7 @@
-import { Link, useLocation } from 'react-router-dom'
+'use client'
+
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useMarketplace } from '../context/MarketplaceContext'
 
 type AppHeaderProps = {
@@ -7,15 +10,15 @@ type AppHeaderProps = {
 
 export function AppHeader({ onOpenMenu }: AppHeaderProps) {
   const { isLoggedIn, userName, searchQuery, setSearchQuery } = useMarketplace()
-  const location = useLocation()
-  const showSearch = location.pathname !== '/entrar' && location.pathname !== '/cadastro'
+  const pathname = usePathname()
+  const showSearch = pathname !== '/entrar' && pathname !== '/cadastro'
 
   return (
     <header className="topbar">
       <button className="icon-button menu-trigger" type="button" aria-label="Abrir menu" onClick={onOpenMenu}>
         <span className="hamburger">☰</span>
       </button>
-      <Link className="brand" to="/" aria-label="Voltar ao início">
+      <Link className="brand" href="/" aria-label="Voltar ao início">
         <span className="brand__mark">J</span><span>JOGADA<span className="brand__dot">.</span></span>
       </Link>
       {showSearch && (
@@ -31,8 +34,8 @@ export function AppHeader({ onOpenMenu }: AppHeaderProps) {
         </label>
       )}
       <div className="topbar__actions">
-        <Link className="icon-button add-button" to="/anuncios/novo" aria-label="Criar anúncio">+</Link>
-        <Link className="account-button" to={isLoggedIn ? '/perfil' : '/entrar'}>
+        <Link className="icon-button add-button" href="/anuncios/novo" aria-label="Criar anúncio">+</Link>
+        <Link className="account-button" href={isLoggedIn ? '/perfil' : '/entrar'}>
           <span className="avatar avatar--small">{userName.slice(0, 1).toUpperCase()}</span>
           <span className="account-button__label">{isLoggedIn ? userName : 'Entrar'}</span>
         </Link>

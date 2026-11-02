@@ -1,7 +1,9 @@
-import type { FormEvent } from 'react'
-import { useMarketplace } from '../context/MarketplaceContext'
+'use client'
 
-export function ProfilePage() {
+import type { FormEvent } from 'react'
+import { useMarketplace } from '../../context/MarketplaceContext'
+
+export default function ProfilePage() {
   const { userName, updateUserName, myListingIds, notify } = useMarketplace()
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {

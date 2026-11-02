@@ -1,4 +1,6 @@
-import { useMarketplace } from '../context/MarketplaceContext'
+'use client'
+
+import { useMarketplace } from '../../context/MarketplaceContext'
 
 const demoProfiles = [
   ['CM', 'Camila Martins', 'camila@email.com'],
@@ -7,7 +9,7 @@ const demoProfiles = [
   ['JP', 'João Prado', 'joao@email.com'],
 ]
 
-export function ProfilesPage() {
+export default function ProfilesPage() {
   const { notify } = useMarketplace()
 
   return (

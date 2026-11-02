@@ -1,6 +1,6 @@
-import { EmptyState } from '../components/EmptyState'
+import { EmptyState } from '../../components/EmptyState'
 
-export function MessagesPage() {
+export default function MessagesPage() {
   return (
     <section className="messages-page">
       <div className="section-heading"><div><span className="eyebrow">CONVERSAS</span><h1>Mensagens</h1></div></div>
