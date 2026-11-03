@@ -1,0 +1,5 @@
+ALTER TABLE "Colecao" ADD COLUMN "preco" REAL;
+ALTER TABLE "Colecao" ADD COLUMN "condicao" TEXT;
+ALTER TABLE "Colecao" ADD COLUMN "ano" INTEGER;
+ALTER TABLE "Colecao" ADD COLUMN "descricao" TEXT;
+ALTER TABLE "Colecao" ADD COLUMN "imagemUrl" TEXT;

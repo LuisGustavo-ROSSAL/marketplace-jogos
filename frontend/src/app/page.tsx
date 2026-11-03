@@ -4,10 +4,11 @@ import Link from 'next/link'
 import { EmptyState } from '../components/EmptyState'
 import { ListingCard } from '../components/ListingCard'
 import { useMarketplace } from '../context/MarketplaceContext'
+import { listingMatchesSearch } from '../utils/listingSearch'
 
 export default function HomePage() {
   const { listings, searchQuery } = useMarketplace()
-  const filteredListings = listings.filter((listing) => listing.name.toLowerCase().includes(searchQuery.toLowerCase()))
+  const filteredListings = listings.filter((listing) => listingMatchesSearch(listing, searchQuery))
 
   return (
     <>

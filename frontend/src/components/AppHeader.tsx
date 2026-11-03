@@ -1,7 +1,8 @@
 'use client'
 
+import type { FormEvent } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useMarketplace } from '../context/MarketplaceContext'
 
 type AppHeaderProps = {
@@ -11,7 +12,13 @@ type AppHeaderProps = {
 export function AppHeader({ onOpenMenu }: AppHeaderProps) {
   const { isLoggedIn, userName, searchQuery, setSearchQuery } = useMarketplace()
   const pathname = usePathname()
+  const router = useRouter()
   const showSearch = pathname !== '/entrar' && pathname !== '/cadastro'
+
+  const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (pathname !== '/' && pathname !== '/colecao') router.push('/#catalogo')
+  }
 
   return (
     <header className="topbar">
@@ -22,16 +29,17 @@ export function AppHeader({ onOpenMenu }: AppHeaderProps) {
         <span className="brand__mark">J</span><span>JOGADA<span className="brand__dot">.</span></span>
       </Link>
       {showSearch && (
-        <label className="search-box">
+        <form className="search-box" role="search" onSubmit={handleSearchSubmit}>
           <span aria-hidden="true">⌕</span>
           <input
-            aria-label="Buscar consoles"
+            type="search"
+            aria-label="Buscar anúncios"
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
             placeholder="Buscar consoles, jogos e acessórios"
           />
           {searchQuery && <button type="button" onClick={() => setSearchQuery('')} aria-label="Limpar busca">×</button>}
-        </label>
+        </form>
       )}
       <div className="topbar__actions">
         <Link className="icon-button add-button" href="/anuncios/novo" aria-label="Criar anúncio">+</Link>

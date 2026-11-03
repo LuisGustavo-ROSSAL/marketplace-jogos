@@ -15,9 +15,16 @@ export class JwtAuthGuard implements CanActivate {
 
         if (method === 'OPTIONS') return true;
         const url = String(req.originalUrl || req.url || '');
+        const isPublicCollectionRead =
+            method === 'GET' &&
+            /^\/api\/colecoes(?:\/\d+)?(?:\?.*)?$/.test(url);
 
-        //liberar somente estas duas rotas
-        if (url.includes('/auth/login') || url.includes('/auth/register')) return true;
+        // Login, cadastro e leitura das coleções são públicos.
+        if (
+            url.includes('/auth/login') ||
+            url.includes('/auth/register') ||
+            isPublicCollectionRead
+        ) return true;
         
         // exige Authorization: Bearer <token>
         const auth = String(req.headers?.authorization || '');

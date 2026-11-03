@@ -7,17 +7,31 @@ import { UpdateColecaoDto } from "./dto/update-colecao.dto";
 export class ColecoesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  criar(dto: CreateColecaoDto) {
-    return this.prisma.colecao.create({ data: dto });
+  criar(dto: CreateColecaoDto, idVendedor: number) {
+    return this.prisma.colecao.create({
+      data: {
+        nomeConsole: dto.nomeConsole,
+        preco: dto.preco,
+        condicao: dto.condicao,
+        ano: dto.ano,
+        descricao: dto.descricao,
+        imagemUrl: dto.imagemUrl,
+        idVendedor,
+      },
+      include: { vendedor: { select: { nome: true } } },
+    });
   }
 
   listar() {
-    return this.prisma.colecao.findMany({ include: { transacoes: true }, orderBy: { id: "asc" } });
+    return this.prisma.colecao.findMany({
+      include: { transacoes: true, vendedor: { select: { nome: true } } },
+      orderBy: { id: "asc" },
+    });
   }
 
   async buscar(id: number) {
     const colecao = await this.prisma.colecao.findUnique({
-      where: { id }, include: { transacoes: true },
+      where: { id }, include: { transacoes: true, vendedor: { select: { nome: true } } },
     });
     if (!colecao) throw new NotFoundException("Coleção não encontrada.");
     return colecao;
@@ -25,7 +39,17 @@ export class ColecoesService {
 
   async atualizar(id: number, dto: UpdateColecaoDto) {
     await this.exigirColecao(id);
-    return this.prisma.colecao.update({ where: { id }, data: dto });
+    return this.prisma.colecao.update({
+      where: { id },
+      data: {
+        nomeConsole: dto.nomeConsole,
+        preco: dto.preco,
+        condicao: dto.condicao,
+        ano: dto.ano,
+        descricao: dto.descricao,
+        imagemUrl: dto.imagemUrl,
+      },
+    });
   }
 
   async remover(id: number) {

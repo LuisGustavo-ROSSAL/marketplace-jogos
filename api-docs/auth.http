@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:3000/api
+@baseUrl = http://localhost:3001/api
 
 ### Entrar
 # Copie access_token da resposta para @token em usuarios.http para testar rotas protegidas.

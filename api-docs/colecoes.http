@@ -1,12 +1,19 @@
 ### Requisições para Colecao
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:3001/api
+@token = token-retornado-no-login
 
 ### Criar coleção
 POST {{baseUrl}}/colecoes
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-  "nomeConsole": "PlayStation 5"
+  "nomeConsole": "PlayStation 5",
+  "preco": 2500,
+  "condicao": "Muito bom",
+  "ano": 2020,
+  "descricao": "Console em ótimo estado.",
+  "imagemUrl": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
 }
 
 ### Listar coleções
@@ -16,12 +23,19 @@ GET {{baseUrl}}/colecoes
 GET {{baseUrl}}/colecoes/1
 
 ### Atualizar coleção
-PUT {{baseUrl}}/colecoes/1
+PATCH {{baseUrl}}/colecoes/1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-  "nomeConsole": "Nintendo Switch"
+  "nomeConsole": "Nintendo Switch",
+  "preco": 1800,
+  "condicao": "Bom",
+  "ano": 2019,
+  "descricao": "Console com carregador.",
+  "imagemUrl": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
 }
 
 ### Excluir coleção
 DELETE {{baseUrl}}/colecoes/1
+Authorization: Bearer {{token}}

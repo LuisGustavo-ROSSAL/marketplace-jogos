@@ -11,6 +11,9 @@ export type Listing = {
   year: string
   description: string
   included: string[]
+  imageUrl?: string
+  sellerId?: number
+  sellerName?: string
 }
 
 export type ListingDraft = Omit<Listing, 'id' | 'status' | 'emoji' | 'color' | 'included'>

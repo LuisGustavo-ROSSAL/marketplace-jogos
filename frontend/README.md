@@ -46,6 +46,8 @@ O Next.js informará o endereço local, normalmente `http://localhost:3000`.
 
 ## Dados e backend
 
-As telas e rotas podem ser construídas antes de seus endpoints existirem. No momento, o catálogo usa dados de demonstração em `src/data/demoListings.ts`, mantidos na memória do navegador. A API ainda não armazena preço, condição, descrição, telefone ou fotos, nem oferece autenticação, mensagens ou checkout. Esses recursos serão integrados quando forem adicionados ao backend.
+Os anúncios são lidos e criados pelo endpoint `/api/colecoes` do backend, disponível por padrão em `http://localhost:3001/api`. O cadastro aceita nome, preço, condição, ano, descrição e uma imagem em Base64 (`imagemUrl`). O frontend também aceita `NEXT_PUBLIC_API_URL` para apontar para outra URL da API.
 
-As ilustrações de consoles também são temporárias. As imagens finais podem ser adicionadas como arquivos de assets e exibidas nos cartões e na página de detalhes.
+Se a API não estiver disponível, o frontend mantém os dados de demonstração em `src/data/demoListings.ts`. As imagens Base64 são enviadas no corpo JSON; o backend aceita requisições de até 10 MB.
+
+As conversas e mensagens ficam no `localStorage` do navegador. O checkout rápido registra a venda pela API `/api/vendas`; anúncios novos ficam associados ao vendedor autenticado. Para ativar esse fluxo no banco, aplique as migrações do backend.

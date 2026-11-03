@@ -1,15 +1,17 @@
 'use client'
 
 import type { CSSProperties } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { EmptyState } from '../../../components/EmptyState'
 import { useMarketplace } from '../../../context/MarketplaceContext'
 import { money } from '../../../utils/format'
 
 export default function ListingDetailsPage() {
   const { id } = useParams<{ id: string }>()
-  const { listings, notify } = useMarketplace()
+  const { listings, notify, openConversation } = useMarketplace()
+  const router = useRouter()
   const listing = listings.find((item) => item.id === Number(id))
 
   if (!listing) return <EmptyState title="Anúncio não encontrado" text="Este anúncio pode ter sido removido." action="Voltar ao catálogo" />
@@ -19,13 +21,17 @@ export default function ListingDetailsPage() {
       <div className="detail-gallery">
         <div className="detail-art" style={{ '--item-color': listing.color } as CSSProperties}>
           <span className="detail-art__year">{listing.year}</span>
-          <span className="detail-art__emoji">{listing.emoji}</span>
+          {listing.imageUrl
+            ? <Image className="detail-art__photo" src={listing.imageUrl} alt={`Foto de ${listing.name}`} fill unoptimized />
+            : <span className="detail-art__emoji">{listing.emoji}</span>}
           <span className="detail-art__caption">JOGADA / PEÇA Nº {String(listing.id).padStart(3, '0')}</span>
         </div>
         <div className="detail-thumbs">
-          <button type="button" aria-label="Imagem anterior" onClick={() => notify('A galeria receberá fotos quando o armazenamento estiver conectado.')}>←</button>
-          {[0, 1, 2].map((image) => <span key={image} className={image ? 'detail-thumb detail-thumb--muted' : 'detail-thumb'} style={{ '--item-color': listing.color } as CSSProperties}>{listing.emoji}</span>)}
-          <button type="button" aria-label="Próxima imagem" onClick={() => notify('A galeria receberá fotos quando o armazenamento estiver conectado.')}>→</button>
+          <button type="button" aria-label="Imagem anterior" onClick={() => notify(listing.imageUrl ? 'Este anúncio tem uma única foto.' : 'Este anúncio ainda não tem fotos.')}>←</button>
+          {listing.imageUrl
+            ? <span className="detail-thumb"><Image src={listing.imageUrl} alt={`Miniatura de ${listing.name}`} fill unoptimized /></span>
+            : [0, 1, 2].map((image) => <span key={image} className={image ? 'detail-thumb detail-thumb--muted' : 'detail-thumb'} style={{ '--item-color': listing.color } as CSSProperties}>{listing.emoji}</span>)}
+          <button type="button" aria-label="Próxima imagem" onClick={() => notify(listing.imageUrl ? 'Este anúncio tem uma única foto.' : 'Este anúncio ainda não tem fotos.')}>→</button>
         </div>
       </div>
       <article className="detail-panel">
@@ -38,7 +44,10 @@ export default function ListingDetailsPage() {
           <div><span>Condição</span><strong>{listing.condition}</strong></div>
         </div>
         <div className="detail-buy">
-          <button className="button button--lime" type="button" onClick={() => notify('A compra será conectada quando a API tiver checkout.')}>{listing.status === 'Vendido' ? 'Ver similares' : 'Tenho interesse'} <span>→</span></button>
+          <button className="button button--lime" type="button" onClick={() => {
+            openConversation(listing)
+            router.push('/mensagens')
+          }}>{listing.status === 'Vendido' ? 'Abrir conversa' : 'Tenho interesse'} <span>→</span></button>
           <strong>{money(listing.price)}</strong>
         </div>
         <div className="seller-block">

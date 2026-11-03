@@ -1,6 +1,7 @@
 'use client'
 
 import type { CSSProperties } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useMarketplace } from '../context/MarketplaceContext'
 import type { Listing } from '../types/listing'
@@ -18,9 +19,10 @@ export function ListingCard({ listing }: { listing: Listing }) {
         href={`/anuncios/${listing.id}`}
         aria-label={`Ver ${listing.name}`}
       >
+        {listing.imageUrl && <Image className="listing-card__photo" src={listing.imageUrl} alt={listing.name} fill unoptimized />}
         <span className="listing-card__edition">JOGADA / {String(listing.id).padStart(3, '0')}</span>
-        <span className="listing-card__emoji">{listing.emoji}</span>
-        <span className="listing-card__image-name">{listing.name}</span>
+        {!listing.imageUrl && <span className="listing-card__emoji">{listing.emoji}</span>}
+        {!listing.imageUrl && <span className="listing-card__image-name">{listing.name}</span>}
       </Link>
       <div className="listing-card__info">
         <span className={listing.status === 'Vendido' ? 'status status--sold' : 'status'}>{listing.status}</span>

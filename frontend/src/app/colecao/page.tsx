@@ -2,10 +2,11 @@
 
 import { ListingCard } from '../../components/ListingCard'
 import { useMarketplace } from '../../context/MarketplaceContext'
+import { listingMatchesSearch } from '../../utils/listingSearch'
 
 export default function CollectionPage() {
   const { listings, searchQuery } = useMarketplace()
-  const visibleListings = listings.filter((listing) => listing.name.toLowerCase().includes(searchQuery.toLowerCase()))
+  const visibleListings = listings.filter((listing) => listingMatchesSearch(listing, searchQuery))
 
   return (
     <section className="catalog-section page-section">
