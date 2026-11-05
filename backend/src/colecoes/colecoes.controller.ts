@@ -1,14 +1,19 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req } from "@nestjs/common";
+import type { Request } from "express";
 import { ColecoesService } from "./colecoes.service";
 import { CreateColecaoDto } from "./dto/create-colecao.dto";
 import { UpdateColecaoDto } from "./dto/update-colecao.dto";
+
+type AuthenticatedRequest = Request & { user: { sub: number } };
 
 @Controller("colecoes")
 export class ColecoesController {
   constructor(private readonly service: ColecoesService) {}
 
   @Post()
-  criar(@Body() dto: CreateColecaoDto) { return this.service.criar(dto); }
+  criar(@Body() dto: CreateColecaoDto, @Req() request: AuthenticatedRequest) {
+    return this.service.criar(dto, request.user.sub);
+  }
 
   @Get()
   listar() { return this.service.listar(); }
