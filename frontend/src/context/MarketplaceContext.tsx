@@ -6,10 +6,13 @@ import { demoListings } from '../data/demoListings'
 import type { Listing, ListingDraft } from '../types/listing'
 import { API_URL } from '../utils/api'
 
+export type MarketplaceRole = 'USER' | 'ADMIN'
+
 export type MarketplaceUser = {
   sub: number
   email: string
   name: string
+  role: MarketplaceRole
 }
 
 export type ChatMessage = {
@@ -67,7 +70,8 @@ function isMarketplaceUser(value: unknown): value is MarketplaceUser {
   return typeof value === 'object' && value !== null &&
     'sub' in value && typeof value.sub === 'number' &&
     'email' in value && typeof value.email === 'string' &&
-    'name' in value && typeof value.name === 'string'
+    'name' in value && typeof value.name === 'string' &&
+    'role' in value && (value.role === 'USER' || value.role === 'ADMIN')
 }
 
 function isConversationStore(value: unknown): value is {
@@ -96,6 +100,8 @@ type MarketplaceContextValue = {
   userName: string
   currentUser: MarketplaceUser | null
   isLoggedIn: boolean
+  sessionReady: boolean
+  accessToken: string
   toast: string
   searchQuery: string
   setSearchQuery: (query: string) => void
@@ -122,6 +128,7 @@ export function MarketplaceProvider({ children }: { children: ReactNode }) {
   const [userName, setUserName] = useState('Usuário')
   const [currentUser, setCurrentUser] = useState<MarketplaceUser | null>(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [sessionReady, setSessionReady] = useState(false)
   const [accessToken, setAccessToken] = useState('')
   const [toast, setToast] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
@@ -154,6 +161,8 @@ export function MarketplaceProvider({ children }: { children: ReactNode }) {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
       notify('Não foi possível restaurar sua sessão. Entre novamente.')
+    } finally {
+      setSessionReady(true)
     }
   }, [notify])
 
@@ -365,6 +374,8 @@ export function MarketplaceProvider({ children }: { children: ReactNode }) {
       userName,
       currentUser,
       isLoggedIn,
+      sessionReady,
+      accessToken,
       toast,
       searchQuery,
       setSearchQuery,

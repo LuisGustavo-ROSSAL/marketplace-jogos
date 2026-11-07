@@ -20,8 +20,11 @@ const menuItems = [
 ]
 
 export function SideDrawer({ open, onClose }: SideDrawerProps) {
-  const { userName, logout, notify } = useMarketplace()
+  const { userName, currentUser, logout, notify } = useMarketplace()
   const pathname = usePathname()
+  const visibleMenuItems = menuItems.filter((item) =>
+    item.to !== '/perfis' || currentUser?.role === 'ADMIN',
+  )
   if (!open) return null
 
   return (
@@ -38,7 +41,7 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
           <span className="drawer__chevron">›</span>
         </Link>
         <nav className="drawer__nav">
-          {menuItems.map((item) => {
+          {visibleMenuItems.map((item) => {
             const isActive = item.to === '/' ? pathname === '/' : pathname === item.to || pathname.startsWith(`${item.to}/`)
             return (
               <Link key={item.to} href={item.to} className={isActive ? 'drawer__link is-active' : 'drawer__link'} onClick={onClose}>
